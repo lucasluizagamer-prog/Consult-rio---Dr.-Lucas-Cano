@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultório - Dr. Lucas Cano</title>
+    <style>
+        :root {
+            --azul-escuro: #1a4f7a;
+            --azul-claro: #e3f2fd;
+            --azul-medio: #2196f3;
+            --branco: #ffffff;
+            --cinza-texto: #333;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: var(--azul-claro); color: var(--cinza-texto); }
+        
+        /* Navegação */
+        nav { background: var(--azul-escuro); padding: 1rem; display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 1000; }
+        nav a { color: white; text-decoration: none; font-weight: bold; cursor: pointer; padding: 5px 10px; border-radius: 4px; }
+        nav a:hover { background: var(--azul-medio); }
+
+        /* Containers */
+        .container { max-width: 900px; margin: 30px auto; background: var(--branco); padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        section { display: none; }
+        section.active { display: block; }
+
+        /* Estilos de Texto */
+        h1, h2, h3 { color: var(--azul-escuro); border-bottom: 2px solid var(--azul-claro); padding-bottom: 10px; }
+        .contato-box { background: var(--azul-claro); padding: 15px; border-radius: 8px; margin-top: 20px; }
+
+        /* Formulários */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: var(--azul-escuro); color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        button:hover { background: var(--azul-medio); }
+
+        /* Grades de Laudos e Prescrições */
+        .grid-docs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .doc-card { border: 1px solid var(--azul-claro); padding: 15px; border-radius: 5px; margin-bottom: 10px; }
+
+        /* Área Médica */
+        #login-area { text-align: center; max-width: 300px; margin: 100px auto; }
+        .med-tabs { display: flex; gap: 10px; margin-bottom: 20px; background: #eee; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a onclick="showSection('inicio')">INÍCIO</a>
+    <a onclick="showSection('quem-somos')">QUEM SOMOS</a>
+    <a onclick="showSection('agendamento')">AGENDAMENTO</a>
+    <a onclick="showSection('laudos-paciente')">LAUDOS/PRESCRIÇÕES</a>
+    <a onclick="showSection('area-medica')" style="background: #cc7a00;">ÁREA MÉDICA</a>
+</nav>
+
+<section id="inicio" class="container active">
+    <h1>Bem-vindo(a) ao Consultório Dr. Lucas Cano</h1>
+    <div class="contato-box">
+        <p><strong>WhatsApp:</strong> (+55) 19 99508-3511</p>
+        <p><strong>Discord:</strong> @lucass_xz</p>
+    </div>
+</section>
+
+<section id="quem-somos" class="container">
+    <h2>Dr. Lucas Cano</h2>
+    <p>🎓 <strong>Graduação Acadêmica:</strong> Formação Completa (6 anos) em medicina pela UNICAMP.</p>
+    <p>🥼 <strong>Graduação Profissional:</strong> Especialista em Clínica Médica, com expertise em pneumologia e radiologia.</p>
+    
+    <h3>🩺 Clínica Médica</h3>
+    <ul>
+        <li>Check-up Completo e Manejo de Doenças Crônicas</li>
+        <li>Risco Cirúrgico e Medicina Preventiva</li>
+    </ul>
+
+    <h3>🫁 Expertise em Pneumologia</h3>
+    <ul>
+        <li>Controle de Asma, Bronquite e Antitabagismo</li>
+        <li>Higiene do Sono e Investigação de Falta de Ar</li>
+    </ul>
+</section>
+
+<section id="agendamento" class="container">
+    <h2>Agendamento de Consulta</h2>
+    <form id="form-agenda">
+        <div class="form-group"><label>Nome Completo:</label><input type="text" required></div>
+        <div class="form-group"><label>Idade:</label><input type="number" required></div>
+        <div class="form-group"><label>Especialidade Desejada:</label><input type="text" required></div>
+        <div class="form-group">
+            <label>Data (Apenas Finais de Semana):</label>
+            <input type="date" id="data-agenda" required>
+        </div>
+        <div class="form-group">
+            <label>Horário:</label>
+            <select required>
+                <option value="08:00">08:00</option><option value="10:00">10:00</option>
+                <option value="14:00">14:00</option><option value="16:00">16:00</option>
+            </select>
+        </div>
+        <div class="form-group"><label>Contato (WhatsApp ou Discord):</label><input type="text" required></div>
+        <button type="submit">Enviar Solicitação</button>
+    </form>
+</section>
+
+<section id="laudos-paciente" class="container">
+    <h2>Meus Documentos Médicos</h2>
+    <p><em>Qualquer dúvida? Chame pelos contatos do Dr. Lucas!</em></p>
+    <div class="grid-docs">
+        <div>
+            <h3>Laudos</h3>
+            <div id="lista-laudos-paciente">Nenhum laudo disponível.</div>
+        </div>
+        <div>
+            <h3>Prescrições</h3>
+            <div id="lista-presc-paciente">Nenhuma prescrição disponível.</div>
+        </div>
+    </div>
+</section>
+
+<section id="area-medica" class="container">
+    <div id="login-form">
+        <h2>Acesso Restrito - Dr. Lucas</h2>
+        <input type="text" id="user" placeholder="Nome"><br><br>
+        <input type="password" id="pass" placeholder="Senha"><br><br>
+        <button onclick="login()">Entrar</button>
+    </div>
+
+    <div id="med-content" style="display:none;">
+        <h2>Painel de Controle Médico</h2>
+        <div class="med-tabs">
+            <button onclick="showMedTab('reg-prontuario')">Registrar Prontuário</button>
+            <button onclick="showMedTab('reg-prescricao')">Registrar Prescrição</button>
+            <button onclick="showMedTab('reg-laudo')">Registrar Laudo</button>
+        </div>
+
+        <div id="reg-prontuario" class="med-tab-content">
+            <h3>Novo Prontuário</h3>
+            <textarea id="pront-data" rows="10" placeholder="Siga o modelo: NOME, IDADE, PESO..."></textarea>
+            <button onclick="salvarProntuario()">Salvar Prontuário</button>
+        </div>
+
+        <div id="reg-prescricao" class="med-tab-content" style="display:none;">
+            <h3>Nova Prescrição</h3>
+            <input type="text" id="presc-nome" placeholder="Nome do Paciente"><br><br>
+            <textarea id="presc-corpo" rows="5" placeholder="Medicamentos, Dosagens..."></textarea>
+            <button onclick="salvarPrescricao()">Enviar para Paciente</button>
+        </div>
+
+        <div id="reg-laudo" class="med-tab-content" style="display:none;">
+            <h3>Novo Laudo</h3>
+            <input type="text" id="laudo-nome" placeholder="Nome do Paciente"><br><br>
+            <textarea id="laudo-corpo" rows="5" placeholder="Achados, Hipótese..."></textarea>
+            <button onclick="salvarLaudo()">Enviar para Paciente</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    function showSection(id) {
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function login() {
+        const u = document.getElementById('user').value;
+        const p = document.getElementById('pass').value;
+        if(u === 'Lucas Cano' && p === 'Lucas@54') {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('med-content').style.display = 'block';
+        } else {
+            alert('Acesso Negado');
+        }
+    }
+
+    function showMedTab(id) {
+        document.querySelectorAll('.med-tab-content').forEach(t => t.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+    }
+
+    // Lógica básica de armazenamento (Simulando Banco de Dados)
+    function salvarPrescricao() {
+        const nome = document.getElementById('presc-nome').value;
+        const texto = document.getElementById('presc-corpo').value;
+        const div = document.getElementById('lista-presc-paciente');
+        div.innerHTML += `<div class="doc-card"><strong>${nome}</strong><br><button onclick="alert('${texto}')">Ver Prescrição</button></div>`;
+        alert('Prescrição enviada!');
+    }
+
+    function salvarLaudo() {
+        const nome = document.getElementById('laudo-nome').value;
+        const texto = document.getElementById('laudo-corpo').value;
+        const div = document.getElementById('lista-laudos-paciente');
+        div.innerHTML += `<div class="doc-card"><strong>${nome}</strong><br><button onclick="alert('${texto}')">Ver Laudo</button></div>`;
+        alert('Laudo enviado!');
+    }
+
+    // Validação de Finais de Semana no Input de Data
+    const dataInput = document.getElementById('data-agenda');
+    dataInput.addEventListener('input', function(e){
+        const day = new Date(this.value).getUTCDay();
+        if([1,2,3,4,5].includes(day)){
+            alert('Por favor, selecione apenas Sábados ou Domingos.');
+            this.value = '';
+        }
+    });
+</script>
+
+</body>
+</html>
